@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="Hotel Du Lac Interlaken — Guest Room Information">
+<title>Hotel Du Lac · Your Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:    #B8935A;
+    --gold-lt: #D4AD78;
+    --dark:    #3D2E1E;
+    --pale:    #F9F5F0;
+    --warm:    #EDE4D8;
+    --white:   #FFFFFF;
+    --grey:    #8C7B6B;
+    --radius:  14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--pale);
+    color: var(--dark);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ───────────────────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    padding: 32px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .logo-wrap {
+    width: 80px;
+    height: 54px;
+    margin: 0 auto 16px;
+    filter: invert(1) brightness(2);
+    opacity: 0.92;
+  }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+  header p {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--gold-lt);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── WELCOME STRIP ────────────────────────────────────────────────── */
+  .welcome {
+    background: var(--gold);
+    padding: 18px 24px;
+    text-align: center;
+  }
+  .welcome p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  /* ── MAIN CONTENT ─────────────────────────────────────────────────── */
+  main {
+    padding: 28px 18px 48px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION LABEL ────────────────────────────────────────────────── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 12px;
+    padding-left: 2px;
+  }
+
+  /* ── CARD GRID ────────────────────────────────────────────────────── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .card-grid.single { grid-template-columns: 1fr; }
+
+  /* ── CARD ─────────────────────────────────────────────────────────── */
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px 16px 20px;
+    text-decoration: none;
+    color: var(--dark);
+    text-align: center;
+    border: 1.5px solid var(--warm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    cursor: pointer;
+    min-height: 130px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.22s ease;
+  }
+  .card:active { transform: scale(0.97); }
+  .card:hover { border-color: var(--gold-lt); box-shadow: 0 4px 20px rgba(184,147,90,0.15); }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.4;
+  }
+
+  /* ── FULL-WIDTH CARD ──────────────────────────────────────────────── */
+  .card.full {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    min-height: 80px;
+    padding: 18px 20px;
+    gap: 16px;
+  }
+  .card.full .card-icon { font-size: 26px; margin-bottom: 0; flex-shrink: 0; }
+  .card.full .card-text { flex: 1; }
+  .card.full .card-title { font-size: 18px; }
+  .card.full::after {
+    content: '›';
+    font-size: 22px;
+    color: var(--gold);
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* ── QUICK INFO BAR ───────────────────────────────────────────────── */
+  .info-bar {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--warm);
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--warm);
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-row:nth-child(even) { background: var(--pale); }
+  .info-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    text-align: right;
+  }
+
+  /* ── MODAL OVERLAY ────────────────────────────────────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(61,46,30,0.55);
+    z-index: 100;
+    backdrop-filter: blur(3px);
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 0 0 40px;
+    animation: slideUp 0.3s cubic-bezier(0.32,0.72,0,1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--warm);
+    border-radius: 2px;
+    margin: 14px auto 0;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--warm);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 1;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal-close {
+    width: 32px; height: 32px;
+    border: none;
+    background: var(--pale);
+    border-radius: 50%;
+    font-size: 18px;
+    color: var(--grey);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .modal-body { padding: 20px 22px 0; }
+
+  /* ── TV CHANNEL LIST ──────────────────────────────────────────────── */
+  .channel-list { list-style: none; }
+  .channel-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--warm);
+    gap: 12px;
+  }
+  .channel-item:last-child { border-bottom: none; }
+  .channel-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+    min-width: 36px;
+  }
+  .channel-name { font-size: 15px; font-weight: 400; flex: 1; color: var(--dark); }
+  .channel-lang {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+    background: var(--pale);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .channel-group-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    padding: 16px 0 8px;
+  }
+
+  /* ── HOUSE RULES ──────────────────────────────────────────────────── */
+  .rules-section { margin-bottom: 20px; }
+  .rules-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--warm);
+  }
+  .rules-section ul { list-style: none; }
+  .rules-section li {
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--dark);
+    border-bottom: 1px solid var(--pale);
+    padding-left: 14px;
+    position: relative;
+  }
+  .rules-section li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────────────────── */
+  footer {
+    background: var(--dark);
+    text-align: center;
+    padding: 24px;
+  }
+  footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--gold-lt);
+    line-height: 1.5;
+  }
+  footer small {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <img src="logo.png" alt="Hotel Du Lac Interlaken" onerror="this.style.display='none'">
+  </div>
+  <h1>Hotel Du Lac</h1>
+  <p>Interlaken Ost · Since 1888</p>
+</header>
+
+<!-- WELCOME -->
+<div class="welcome">
+  <p>Welcome — we hope you enjoy your stay with us.</p>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- QUICK INFO -->
+  <div class="section-label">Your Stay</div>
+  <div class="info-bar">
+    <div class="info-row">
+      <span class="info-label">WiFi Network</span>
+      <span class="info-value">DuLac</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">WiFi Password</span>
+      <span class="info-value">dulac1888</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Breakfast</span>
+      <span class="info-value">07:00 – 10:30</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Check-out</span>
+      <span class="info-value">By 11:00</span>
+    </div>
+  </div>
+
+  <!-- MAIN CARDS -->
+  <div class="section-label">Room & Hotel</div>
+  <div class="card-grid">
+
+    <!-- TV Channels -->
+    <div class="card" onclick="openModal('tv')">
+      <div class="card-icon">📺</div>
+      <div class="card-title">TV Channels</div>
+      <div class="card-sub">Full channel guide</div>
+    </div>
+
+    <!-- House Rules -->
+    <div class="card" onclick="openModal('rules')">
+      <div class="card-icon">📋</div>
+      <div class="card-title">House Rules</div>
+      <div class="card-sub">Important information</div>
+    </div>
+
+  </div>
+
+  <!-- EXPLORE CARDS -->
+  <div class="section-label">Explore the Region</div>
+  <div class="card-grid single">
+
+    <!-- Interlaken Pass -->
+    <a class="card full" href="https://portal.deskline.net/all/checkin/provider/GRI/18869715-d78a-4c5c-8197-258a4003d540?userId=23235643-9f04-4611-8383-a16286733430" target="_blank" rel="noopener">
+      <div class="card-icon">🎫</div>
+      <div class="card-text">
+        <div class="card-title">Register for your Digital Guest Card</div>
+        <div class="card-sub">Free public transport & attraction discounts</div>
+      </div>
+    </a>
+
+    <!-- Jungfrau Region -->
+    <a class="card full" href="https://www.jungfrau.ch/en-gb/" target="_blank" rel="noopener">
+      <div class="card-icon">🏔</div>
+      <div class="card-text">
+        <div class="card-title">Jungfrau Region</div>
+        <div class="card-sub">Trains, hiking, activities & weather</div>
+      </div>
+    </a>
+
+    <!-- Interlaken Tourism -->
+    <a class="card full" href="https://www.interlaken.ch/en/" target="_blank" rel="noopener">
+      <div class="card-icon">🗺</div>
+      <div class="card-text">
+        <div class="card-title">Interlaken Tourism</div>
+        <div class="card-sub">What to see, do and eat in the area</div>
+      </div>
+    </a>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>We are glad you are here — enjoy your stay.</p>
+  <small>Hotel Du Lac · Höheweg 225 · 3800 Interlaken Ost</small>
+</footer>
+
+
+<!-- ── TV CHANNEL MODAL ─────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-tv" onclick="closeOnOverlay(event,'modal-tv')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">📺 TV Channels</div>
+      <button class="modal-close" onclick="closeModal('tv')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="channel-group-title">Swiss & German</div>
+      <ul class="channel-list">
+        <li class="channel-item"><span class="channel-num">1</span><span class="channel-name">SRF 1</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">2</span><span class="channel-name">SRF zwei</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">3</span><span class="channel-name">SRF info</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">4</span><span class="channel-name">Das Erste (ARD)</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">5</span><span class="channel-name">ZDF</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">6</span><span class="channel-name">3sat</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">7</span><span class="channel-name">RTL</span><span class="channel-lang">DE</span></li>
+        <li class="channel-item"><span class="channel-num">8</span><span class="channel-name">ProSieben</span><span class="channel-lang">DE</span></li>
+      </ul>
+
+      <div class="channel-group-title">French & Italian</div>
+      <ul class="channel-list">
+        <li class="channel-item"><span class="channel-num">9</span><span class="channel-name">RTS Un</span><span class="channel-lang">FR</span></li>
+        <li class="channel-item"><span class="channel-num">10</span><span class="channel-name">RTS Deux</span><span class="channel-lang">FR</span></li>
+        <li class="channel-item"><span class="channel-num">11</span><span class="channel-name">RSI La 1</span><span class="channel-lang">IT</span></li>
+        <li class="channel-item"><span class="channel-num">12</span><span class="channel-name">France 2</span><span class="channel-lang">FR</span></li>
+      </ul>
+
+      <div class="channel-group-title">International & News</div>
+      <ul class="channel-list">
+        <li class="channel-item"><span class="channel-num">13</span><span class="channel-name">BBC World News</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">14</span><span class="channel-name">CNN International</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">15</span><span class="channel-name">Euronews</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">16</span><span class="channel-name">Al Jazeera English</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">17</span><span class="channel-name">Sky News</span><span class="channel-lang">EN</span></li>
+      </ul>
+
+      <div class="channel-group-title">Entertainment</div>
+      <ul class="channel-list">
+        <li class="channel-item"><span class="channel-num">18</span><span class="channel-name">National Geographic</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">19</span><span class="channel-name">Discovery Channel</span><span class="channel-lang">EN</span></li>
+        <li class="channel-item"><span class="channel-num">20</span><span class="channel-name">Eurosport 1</span><span class="channel-lang">EN</span></li>
+      </ul>
+
+      <p style="font-size:12px;color:var(--grey);margin-top:20px;font-style:italic;padding-bottom:8px;">
+        * Channel list is for guidance — please update with your actual channel lineup before publishing.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ── HOUSE RULES MODAL ────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-rules" onclick="closeOnOverlay(event,'modal-rules')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">📋 House Rules</div>
+      <button class="modal-close" onclick="closeModal('rules')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="rules-section">
+        <h3>Quiet Hours</h3>
+        <ul>
+          <li>Quiet hours: 22:00 – 07:00. Please keep noise to a minimum.</li>
+          <li>Parties or gatherings in rooms are not permitted.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>Bathroom</h3>
+        <ul>
+          <li>Always keep the shower curtain inside the bath when showering — there is no floor drain.</li>
+          <li>Water damage caused by flooding will be charged to the guest.</li>
+          <li>Do not flush wet wipes or sanitary products — use the bin provided.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>Smoking</h3>
+        <ul>
+          <li>Strictly no smoking inside the hotel.</li>
+          <li>Balcony smoking is permitted.</li>
+          <li>CHF 250 deep-clean fee applies if smoking indoors.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>No Cooking in Room</h3>
+        <ul>
+          <li>Cooking in rooms is strictly prohibited.</li>
+          <li>The kettle is for hot drinks only — not for cooking food.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>Keys</h3>
+        <ul>
+          <li>Please return both your room key and safety box key to reception on departure.</li>
+          <li>Charges apply for lost or unreturned keys.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>Breakfast</h3>
+        <ul>
+          <li>Breakfast is not included in the room rate — CHF 18.00 per person per day.</li>
+          <li>Served daily 07:00 – 10:30. Please book with reception the evening before.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <h3>Check-out</h3>
+        <ul>
+          <li>Please vacate your room by 11:00 on your day of departure.</li>
+          <li>Late check-out available on request, subject to availability.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeOnOverlay(e, id) {
+    if (e.target === e.currentTarget) closeModal(id.replace('modal-',''));
+  }
+  // Swipe down to close
+  document.querySelectorAll('.modal').forEach(modal => {
+    let startY = 0;
+    modal.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    modal.addEventListener('touchend', e => {
+      if (e.changedTouches[0].clientY - startY > 80) {
+        const overlay = modal.closest('.modal-overlay');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }, { passive: true });
+  });
+</script>
+
+</body>
+</html>
