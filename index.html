@@ -495,7 +495,7 @@
   </div>
 
   <!-- RESTAURANTS -->
-  <div class="section-label">Eat &amp; Drink</div>
+  <div class="section-label">Recommendations</div>
   <div class="card-grid single">
 
     <div class="card full" onclick="openModal('restaurants')">
@@ -503,6 +503,14 @@
       <div class="card-text">
         <div class="card-title">Our Restaurant Recommendations</div>
         <div class="card-sub">A curated guide to eating in Interlaken</div>
+      </div>
+    </div>
+
+    <div class="card full" onclick="openModal('laundry')">
+      <div class="card-icon">🧺</div>
+      <div class="card-text">
+        <div class="card-title">External Laundry Services</div>
+        <div class="card-sub">Where to wash while you're here</div>
       </div>
     </div>
 
@@ -718,6 +726,33 @@
         <div class="resto-detail">Probably the only Mexican restaurant in the Bernese Oberland — great fajitas, guacamole and margaritas. Fun and relaxed atmosphere.</div>
         <div class="resto-links">
           <a class="resto-link" href="https://maps.google.com/?q=El+Azteca,+Interlaken" target="_blank">Maps</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ── EXTERNAL LAUNDRY MODAL ─────────────────────────────────── -->
+<div class="modal-overlay" id="modal-laundry" onclick="closeOnOverlay(event,'modal-laundry')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">🧺 External Laundry Services</div>
+      <button class="modal-close" onclick="closeModal('laundry')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <p class="resto-intro">At Hotel Du Lac we do not offer in-house laundry services, but here is our suggestion:</p>
+
+      <div class="resto-item">
+        <div class="resto-name">Wash &amp; Go Interlaken Ost</div>
+        <div class="resto-cuisine">Self-service laundrette</div>
+        <div class="resto-detail">📍 Höheweg 72 · <strong>5–10 min walk</strong></div>
+        <div class="resto-detail">Approx. CHF 14 per wash.</div>
+        <div class="resto-links">
+          <a class="resto-link" href="https://maps.google.com/?q=Wash+%26+Go+Interlaken+Ost,+Höheweg+72,+3800+Interlaken" target="_blank">Maps</a>
         </div>
       </div>
 
